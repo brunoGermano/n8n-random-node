@@ -1,0 +1,10 @@
+# Dependencies
+/node_modules
+/n8n-data/custom/n8n-nodes-random/node_modules
+/n8n-data/custom/n8n-nodes-random/dist
+
+# Docker
+/n8n-data
+
+# Environment
+.env
