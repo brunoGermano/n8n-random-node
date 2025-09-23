@@ -1,4 +1,3 @@
-# docker-compose.yml
 version: '3.7'
 
 services:
@@ -9,15 +8,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   n8n:
     image: n8nio/n8n:latest
@@ -29,25 +21,15 @@ services:
       - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
       - DB_POSTGRESDB_USER=${POSTGRES_USER}
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
-      - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
-      - N8N_PROTOCOL=https
-      - NODE_ENV=production
-      - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
-      # Mapeia a pasta de desenvolvimento de nodes para dentro do contêiner
-      - NODE_FUNCTION_ALLOW_EXTERNAL=child_process,fs
-      - N8N_ADDITIONAL_PACKAGES=/home/node/package.json
+      # Variável de ambiente para instalar nós customizados
+      - NODE_FUNCTION_ALLOW_EXTERNAL=n8n-nodes-random
     ports:
       - "5678:5678"
     volumes:
-      # Mapeamento do volume para persistência de dados do n8n. Ele levará a nova subpasta custom para dentro do contêiner no caminho /home/node/.n8n/custom
-      - ./n8n-data:/home/node/.n8n
-      - ./package.json:/home/node/package.json
-      # Mapeamento do volume para desenvolvimento de nodes customizados
-      # O n8n irá procurar por pacotes de nodes instalados nesta pasta. Estava dando problema então tirei a linha abaixo, agora o n8n procura na pasta padrão "custom" e não mais em "custom-nodes"
-      # - ./custom-nodes:/home/node/custom-nodes
-    depends_on:
-      postgres:
-        condition: service_healthy
+      - n8n_data:/home/node/.n8n
+      # Mapeia a pasta do seu nó para dentro do contêiner
+      - ./custom-nodes/n8n-nodes-random:/usr/local/lib/node_modules/n8n-nodes-random
 
 volumes:
   db_data:
+  n8n_data:

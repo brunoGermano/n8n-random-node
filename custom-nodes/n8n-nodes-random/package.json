@@ -1,0 +1,33 @@
+{
+  "name": "n8n-nodes-random",
+  "version": "1.0.0",
+  "description": "Um conector n8n para gerar números aleatórios verdadeiros usando a API Random.org.",
+  "main": "dist/Random.node.js",
+  "scripts": {
+    "build": "npm run copy-assets && tsc",
+    "copy-assets": "cpx \"src/**/*.svg\" dist",
+    "dev": "tsc --watch"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "nodes": [
+      "dist/Random.node.js"
+    ]
+  },
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "license": "MIT",
+  "author": "",
+  "dependencies": {
+    "n8n-core": "^1.14.1",
+    "n8n-workflow": "^1.82.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "cpx": "^1.5.0",
+    "typescript": "^5.9.2"
+  }
+}
