@@ -131,5 +131,5 @@ Aqui estão alguns comandos úteis do Docker para gerenciar o ambiente:
     
         docker compose down -v
 
-Este README.md cobre todos os pontos necessários e serve como um excelente guia para qualquer pessoa que queira executar e avaliar seu projeto.
+Este README.md cobre todos os pontos necessários e serve como um excelente guia para qualquer pessoa que queira executar e avaliar este projeto.
 
